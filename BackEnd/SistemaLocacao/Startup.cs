@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SistemaLocacao.Repositories;
 
 namespace SistemaLocacao
 {
@@ -28,6 +29,8 @@ namespace SistemaLocacao
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+
+            services.AddScoped<ClienteRepositories>();
         }
 
         public void Configure(WebApplication app, IWebHostEnvironment environment)
