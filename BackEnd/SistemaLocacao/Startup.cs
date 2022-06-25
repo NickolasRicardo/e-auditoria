@@ -32,6 +32,7 @@ namespace SistemaLocacao
 
             services.AddScoped<ClienteRepositories>();
             services.AddScoped<FilmeRepositories>();
+            services.AddScoped<LocacaoRepositories>();
         }
 
         public void Configure(WebApplication app, IWebHostEnvironment environment)
