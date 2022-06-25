@@ -27,13 +27,13 @@ namespace SistemaLocacao.Controllers
 
         // GET: api/Clientes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
+        public async Task<ActionResult<List<Cliente>>> GetClientes()
         {
             if (_context.Cliente == null)
             {
                 return NotFound();
             }
-            return await _context.Cliente.ToListAsync();
+            return await _clienteRepositories.ListClientes();
         }
 
         // GET: api/Clientes/5
@@ -56,9 +56,9 @@ namespace SistemaLocacao.Controllers
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCliente(
-         int id,
-         [FromBody] RequestModelCreateClienteDTO model
-     )
+            int id,
+            [FromBody] RequestModelCreateClienteDTO model
+        )
         {
             try
             {
