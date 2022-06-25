@@ -11,13 +11,12 @@ namespace SistemaLocacao.Models
         public int Id { get; set; }
 
         [Column("Titulo")]
-        public string? Titulo { get; set; }
+        public string Titulo { get; set; }
 
         [Column("ClassificacaoIndicativa")]
         public int Classificacao { get; set; }
 
         [Column("Lancamento")]
         public bool Lancamento { get; set; }
-
     }
 }

@@ -12,15 +12,13 @@ namespace SistemaLocacao.Models
 
         [Column("Nome")]
         [MaxLength(200)]
-        public string? Nome { get; set; }
+        public string Nome { get; set; }
 
         [Column("CPF")]
         [MaxLength(11)]
-        public string? CPF { get; set; }
+        public string CPF { get; set; }
 
         [Column("DataNascimento")]
         public DateTime? DataNascimento { get; set; }
-
-      
     }
 }
