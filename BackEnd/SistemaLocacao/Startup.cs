@@ -31,6 +31,7 @@ namespace SistemaLocacao
             services.AddSwaggerGen();
 
             services.AddScoped<ClienteRepositories>();
+            services.AddScoped<FilmeRepositories>();
         }
 
         public void Configure(WebApplication app, IWebHostEnvironment environment)
