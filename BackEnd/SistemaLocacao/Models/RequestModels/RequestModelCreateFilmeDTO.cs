@@ -4,7 +4,7 @@ namespace SistemaLocacao.Models.RequestModels
 {
     public class RequestModelCreateFilmeDTO
     {
-        public RequestModelCreateFilmeDTO(string titulo, string cpf)
+        public RequestModelCreateFilmeDTO(string titulo)
         {
             Titulo = titulo;
         }
@@ -14,5 +14,8 @@ namespace SistemaLocacao.Models.RequestModels
 
         [JsonProperty("Lancamento")]
         public bool Lancamento { get; set; }
+
+        [JsonProperty("Classificacao")]
+        public int Classificacao { get; set; }
     }
 }

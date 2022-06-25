@@ -21,6 +21,7 @@ namespace SistemaLocacao.Repositories
 
                 newFilme.Titulo = model.Titulo;
                 newFilme.Lancamento = model.Lancamento;
+                newFilme.Classificacao = model.Classificacao;
 
                 _context.Filme.Add(newFilme);
                 await _context.SaveChangesAsync();
@@ -58,6 +59,7 @@ namespace SistemaLocacao.Repositories
 
             filme.Titulo = model.Titulo;
             filme.Lancamento = model.Lancamento;
+            filme.Classificacao = model.Classificacao;
 
             _context.Entry(filme).State = EntityState.Modified;
 
