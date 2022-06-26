@@ -65,7 +65,7 @@ const Clientes: React.FC = () => {
 
     let dataAniv = new Date(
       parseInt(dataSplit[2]),
-      parseInt(dataSplit[1]),
+      parseInt(dataSplit[1]) - 1,
       parseInt(dataSplit[0])
     )
       .toISOString()
