@@ -6,6 +6,11 @@ namespace SistemaLocacao.Models
     [Table("filme")]
     public class Filme
     {
+        public Filme()
+        {
+            Locacoes = new List<Locacao>();
+        }
+
         [Key]
         [Column("Id")]
         public int Id { get; set; }
@@ -18,5 +23,8 @@ namespace SistemaLocacao.Models
 
         [Column("Lancamento")]
         public bool Lancamento { get; set; }
+
+        [NotMapped]
+        public virtual ICollection<Locacao> Locacoes { get; set; }
     }
 }
