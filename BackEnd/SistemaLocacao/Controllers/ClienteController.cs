@@ -77,7 +77,7 @@ namespace SistemaLocacao.Controllers
             try
             {
                 var newCliente = await _clienteRepositories.CreateCliente(model);
-                return CreatedAtAction("GetCliente", new { id = newCliente.Id }, newCliente);
+                return CreatedAtAction("GetClienteByID", new { id = newCliente.Id }, newCliente);
             }
             catch (Exception ex)
             {
