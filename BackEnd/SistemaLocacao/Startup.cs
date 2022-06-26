@@ -15,6 +15,20 @@ namespace SistemaLocacao
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(
+                options =>
+                    options.AddPolicy(
+                        "CorsPolicy",
+                        builder =>
+                        {
+                            builder
+                                .AllowAnyHeader()
+                                .AllowAnyMethod()
+                                .SetIsOriginAllowed((host) => true)
+                                .AllowCredentials();
+                        }
+                    )
+            );
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 29));
 
             var connectionString = Configuration.GetConnectionString("default");
@@ -53,6 +67,8 @@ namespace SistemaLocacao
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
 
