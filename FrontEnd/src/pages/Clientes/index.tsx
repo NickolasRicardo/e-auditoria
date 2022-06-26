@@ -218,7 +218,12 @@ const Clientes: React.FC = () => {
           </Button>
         </Col>
         <Col span={24}>
-          <Table columns={columns} dataSource={clientes} loading={loading} />
+          <Table
+            columns={columns}
+            dataSource={clientes}
+            loading={loading}
+            pagination={{ defaultPageSize: 10 }}
+          />
         </Col>
       </Row>
 
