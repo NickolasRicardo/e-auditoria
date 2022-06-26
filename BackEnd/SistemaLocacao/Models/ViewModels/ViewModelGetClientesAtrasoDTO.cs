@@ -6,14 +6,14 @@ namespace SistemaLocacao.Models.ViewModels
     {
         public ViewModelGetClientesAtrasoDTO()
         {
-            Clientes = new List<ClienteDTO>();
+            Data = new List<ClienteDTO>();
         }
 
         [JsonProperty("Quantidade")]
         public int Quantidade { get; set; }
 
-        [JsonProperty("Clientes")]
-        public List<ClienteDTO> Clientes { get; set; }
+        [JsonProperty("data")]
+        public List<ClienteDTO> Data { get; set; }
     }
 
     public class ClienteDTO

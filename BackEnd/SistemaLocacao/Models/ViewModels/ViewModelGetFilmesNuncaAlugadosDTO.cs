@@ -6,14 +6,14 @@ namespace SistemaLocacao.Models.ViewModels
     {
         public ViewModelGetFilmesNuncaAlugadosDTO()
         {
-            Filmes = new List<FilmeDTO>();
+            Data = new List<FilmeDTO>();
         }
 
         [JsonProperty("Quantidade")]
         public int Quantidade { get; set; }
 
-        [JsonProperty("Filmes")]
-        public List<FilmeDTO> Filmes { get; set; }
+        [JsonProperty("Data")]
+        public List<FilmeDTO> Data { get; set; }
     }
 
     public class FilmeDTO

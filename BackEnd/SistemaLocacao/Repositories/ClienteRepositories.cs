@@ -85,7 +85,9 @@ namespace SistemaLocacao.Repositories
         {
             try
             {
-                List<Cliente> clientes = await _context.Cliente.ToListAsync();
+                List<Cliente> clientes = await _context.Cliente
+                    .OrderByDescending(c => c.Id)
+                    .ToListAsync();
 
                 return clientes;
             }

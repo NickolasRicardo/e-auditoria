@@ -98,10 +98,10 @@ namespace SistemaLocacao.Repositories
                     ? model.DataLocacao
                     : locacao.DataLocacao;
 
-            locacao.DataDevolucao =
-                model.DataDevolucao > new DateTime(0001, 01, 01)
-                    ? model.DataDevolucao
-                    : locacao.DataDevolucao;
+            if (model.DataDevolucao > new DateTime(1901, 02, 01))
+                locacao.DataDevolucao = model.DataDevolucao;
+            else
+                locacao.DataDevolucao = new DateTime(0001, 01, 01);
 
             _context.Entry(locacao).State = EntityState.Modified;
 
@@ -163,7 +163,10 @@ namespace SistemaLocacao.Repositories
                 {
                     ViewModelGetLocacaoDTO vm = new ViewModelGetLocacaoDTO();
                     vm.Id = item.Id;
+                    vm.ClienteID = item.Cliente.Id;
                     vm.ClienteNome = item.Cliente.Nome;
+                    vm.FilmeID = item.Filme.Id;
+
                     vm.FilmeNome = item.Filme.Titulo;
                     vm.DataDevolucao =
                         item.DataDevolucao > new DateTime(0001, 01, 01)

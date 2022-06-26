@@ -43,19 +43,19 @@ namespace SistemaLocacao.Repositories
                 {
                     if (_locacaoRepositories.VerificaAtraso(locacao.DataLocacao, locacao.Filme))
                     {
-                        if (!vm.Clientes.Any(c => c.Id == locacao.Cliente.Id))
+                        if (!vm.Data.Any(c => c.Id == locacao.Cliente.Id))
                         {
                             ClienteDTO client = new ClienteDTO();
 
                             client.Id = locacao.Cliente.Id;
                             client.Nome = locacao.Cliente.Nome;
 
-                            vm.Clientes.Add(client);
+                            vm.Data.Add(client);
                         }
                     }
                 }
 
-                vm.Quantidade = vm.Clientes.Count;
+                vm.Quantidade = vm.Data.Count;
 
                 return vm;
             }
@@ -83,10 +83,10 @@ namespace SistemaLocacao.Repositories
                     f.Id = item.Id;
                     f.Nome = item.Titulo;
 
-                    vm.Filmes.Add(f);
+                    vm.Data.Add(f);
                 }
 
-                vm.Quantidade = vm.Filmes.Count;
+                vm.Quantidade = vm.Data.Count;
 
                 return vm;
             }

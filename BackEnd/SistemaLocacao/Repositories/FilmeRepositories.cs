@@ -84,7 +84,9 @@ namespace SistemaLocacao.Repositories
         {
             try
             {
-                List<Filme> filmes = await _context.Filme.ToListAsync();
+                List<Filme> filmes = await _context.Filme
+                    .OrderByDescending(f => f.Id)
+                    .ToListAsync();
 
                 return filmes;
             }
