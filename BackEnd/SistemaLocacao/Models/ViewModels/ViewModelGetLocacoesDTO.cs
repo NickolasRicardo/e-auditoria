@@ -4,6 +4,9 @@ namespace SistemaLocacao.Models.ViewModels
 {
     public class ViewModelGetLocacaoDTO
     {
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
         [JsonProperty("ClienteNome")]
         public string ClienteNome { get; set; }
 
