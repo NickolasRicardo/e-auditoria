@@ -37,18 +37,21 @@ const Home: React.FC = () => {
       let { error, response } = await services.GetFilmesMaisAlugados();
       if (!error && response) {
         setData(response);
+        setQuantidade(undefined);
       }
     }
     if (e === 4) {
       let { error, response } = await services.GetFilmesMenosAlugados();
       if (!error && response) {
         setData(response);
+        setQuantidade(undefined);
       }
     }
     if (e === 5) {
       let { error, response } = await services.GetClienteQueMaisAlugou();
       if (!error && response) {
         setData(response);
+        setQuantidade(undefined);
       }
     }
   };
