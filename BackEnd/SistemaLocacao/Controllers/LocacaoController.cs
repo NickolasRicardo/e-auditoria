@@ -45,7 +45,10 @@ namespace SistemaLocacao.Controllers
             {
                 return NotFound();
             }
-            var locacao = await _context.Locacao.FindAsync(id);
+            var locacao = await _context.Locacao
+                .Include(l => l.Cliente)
+                .Include(l => l.Filme)
+                .FirstOrDefaultAsync(l => l.Id == id);
 
             if (locacao == null)
             {
@@ -58,32 +61,31 @@ namespace SistemaLocacao.Controllers
         // PUT: api/Locacaos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutLocacao(int id, Locacao locacao)
+        public async Task<IActionResult> PutLocacao(int id, RequestModelUpdateLocacaoDTO model)
         {
-            if (id != locacao.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(locacao).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _locacaoRepositories.UpdateLocacao(id, model);
+                return Ok();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception e)
             {
-                if (!LocacaoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest(e);
             }
+        }
 
-            return NoContent();
+        [HttpPatch("DevolverFilme")]
+        public async Task<IActionResult> DevolverFilme(int id, RequestModelDevolverFilmeDTO model)
+        {
+            try
+            {
+                await _locacaoRepositories.DevolverFilme(id, model);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
 
         // POST: api/Locacaos
@@ -120,11 +122,6 @@ namespace SistemaLocacao.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool LocacaoExists(int id)
-        {
-            return (_context.Locacao?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

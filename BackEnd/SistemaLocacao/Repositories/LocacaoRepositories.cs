@@ -72,7 +72,7 @@ namespace SistemaLocacao.Repositories
             }
         }
 
-        public async Task UpdateLocacao(int id, RequestModelCreateLocacaoDTO model)
+        public async Task UpdateLocacao(int id, RequestModelUpdateLocacaoDTO model)
         {
             Locacao locacao = await GetLocacao(id);
 
@@ -94,7 +94,39 @@ namespace SistemaLocacao.Repositories
             locacao.Cliente = cliente;
             locacao.Filme = filme;
             locacao.DataLocacao =
-                model.DataLocacao > new DateTime(0001, 01, 01) ? model.DataLocacao : DateTime.Now;
+                model.DataLocacao > new DateTime(0001, 01, 01)
+                    ? model.DataLocacao
+                    : locacao.DataLocacao;
+
+            locacao.DataDevolucao =
+                model.DataDevolucao > new DateTime(0001, 01, 01)
+                    ? model.DataDevolucao
+                    : locacao.DataDevolucao;
+
+            _context.Entry(locacao).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (locacao == null)
+                {
+                    throw (new Exception("Locação não encontrado"));
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
+        public async Task DevolverFilme(int id, RequestModelDevolverFilmeDTO model)
+        {
+            Locacao locacao = await GetLocacao(id);
+
+            locacao.DataDevolucao = model.DataDevolucao;
 
             _context.Entry(locacao).State = EntityState.Modified;
 
@@ -122,6 +154,7 @@ namespace SistemaLocacao.Repositories
                 List<Locacao> Locacao = await _context.Locacao
                     .Include(l => l.Cliente)
                     .Include(l => l.Filme)
+                    .OrderByDescending(l => l.Id)
                     .ToListAsync();
 
                 List<ViewModelGetLocacaoDTO> locacoes = new List<ViewModelGetLocacaoDTO>();
@@ -129,7 +162,7 @@ namespace SistemaLocacao.Repositories
                 foreach (var item in Locacao)
                 {
                     ViewModelGetLocacaoDTO vm = new ViewModelGetLocacaoDTO();
-
+                    vm.Id = item.Id;
                     vm.ClienteNome = item.Cliente.Nome;
                     vm.FilmeNome = item.Filme.Titulo;
                     vm.DataDevolucao =
@@ -154,6 +187,10 @@ namespace SistemaLocacao.Repositories
                             vm.StatusDevolucao = "Em dia";
                         }
                     }
+                    else
+                    {
+                        vm.StatusDevolucao = "Devolvido";
+                    }
 
                     locacoes.Add(vm);
                 }
@@ -164,6 +201,21 @@ namespace SistemaLocacao.Repositories
             {
                 throw;
             }
+        }
+
+        public bool VerificaAtraso(DateTime dataLocacao, Filme filme)
+        {
+            var dataDevolucao = dataLocacao;
+
+            if (filme.Lancamento)
+                dataDevolucao = dataLocacao.AddDays(2);
+            else
+                dataDevolucao = dataLocacao.AddDays(3);
+
+            if (DateTime.Now < dataDevolucao)
+                return false;
+
+            return true;
         }
     }
 }
