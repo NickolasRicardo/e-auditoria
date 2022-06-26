@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 using SistemaLocacao.Repositories;
 
 namespace SistemaLocacao
@@ -21,11 +22,20 @@ namespace SistemaLocacao
             services.AddDbContext<DatabaseContext>(
                 dbContextOptions =>
                     dbContextOptions
-                        .UseMySql(connectionString, serverVersion)
+                        .UseMySql(
+                            connectionString,
+                            serverVersion,
+                            options => options.EnableRetryOnFailure()
+                        )
                         .EnableDetailedErrors()
             );
 
             services.AddControllers();
+            services
+                .AddControllers()
+                .AddJsonOptions(
+                    x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
+                );
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
@@ -33,6 +43,7 @@ namespace SistemaLocacao
             services.AddScoped<ClienteRepositories>();
             services.AddScoped<FilmeRepositories>();
             services.AddScoped<LocacaoRepositories>();
+            services.AddScoped<RelatoriosRepositories>();
         }
 
         public void Configure(WebApplication app, IWebHostEnvironment environment)
