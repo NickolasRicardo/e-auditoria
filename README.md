@@ -41,6 +41,8 @@ Por fim, pode-se executar o seguinte comando para rodar a aplicação.
     dotnet run
 ```
 
+Para conhecer as rotas, acesse o swagger no seguinte endereço: [http://localhost:5000/swagger/index.html](http://localhost:5000/swagger/index.html).
+
 ## Instalação Frontend
 
 Abra a pasta base do frontend e baixe as dependencias do projeto.
