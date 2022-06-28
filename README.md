@@ -58,6 +58,6 @@ Para a execução da aplicação no modo de desenvolvimento é necessário rodar
 
 Acesse [http://localhost:3000](http://localhost:3000) para visualizar no seu navegador.
 
-## Apêndice
+## Banco de dados
 
 Na pasta `Database` contém 2 scripts, 1 contém a script para criação da base de dados, para caso não queira rodar o `update-database` e 1 script com um lote de inserts para popular a base de dados para melhor visualização dos componentes.
