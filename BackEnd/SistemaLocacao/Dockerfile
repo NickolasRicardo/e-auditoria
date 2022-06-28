@@ -1,16 +1,21 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+FROM centos:7 AS base
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+# Add Microsoft package repository and install ASP.NET Core
+RUN rpm -Uvh https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm \
+    && yum install -y aspnetcore-runtime-6.0
+
+# Ensure we listen on any IP Address 
+ENV DOTNET_URLS=http://+:5000
+
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
+# ... remainder of dockerfile as before
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["SistemaLocacao/SistemaLocacao.csproj", "SistemaLocacao/"]
-RUN dotnet restore "SistemaLocacao/SistemaLocacao.csproj"
+COPY ["SistemaLocacao.csproj", "."]
+RUN dotnet restore "./SistemaLocacao.csproj"
 COPY . .
-WORKDIR "/src/SistemaLocacao"
+WORKDIR "/src/."
 RUN dotnet build "SistemaLocacao.csproj" -c Release -o /app/build
 
 FROM build AS publish
