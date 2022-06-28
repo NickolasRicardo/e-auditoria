@@ -272,7 +272,7 @@ const Locacoes: React.FC = () => {
         <Col span={6}></Col>
         <Col span={6}>
           <Button style={{ width: '100%', height: '80%' }} onClick={showModal2}>
-            Novo Locacao
+            Nova Locação
           </Button>
         </Col>
         <Col span={24}>
